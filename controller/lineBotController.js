@@ -11,21 +11,33 @@ const messageHandler = async (event) => {
   if (event.type !== 'message' || event.message.type !== 'text') {
     return Promise.resolve(null)
   }
-  let str = `id0=bot&id1=${event.timestamp}&id2=&id3=&id4=`
-  const link = await shortShopeeLink(event.message.text, str)
-  const echo = { type: 'text', text: link }
+
+  const link = event.message.text
+  const isShopeeLink = link.match('/^https\:\/\/shopee\.tw\//')
+
+  if (isShopeeLink) {
+    let str = `id0=bot&id1=${event.timestamp}&id2=&id3=&id4=`
+    try {
+      const link = await shortShopeeLink(event.message.text, str)
+      const echo = { type: 'text', text: link }
+      return client.replyMessage(event.replyToken, echo)
+    } catch (error) {
+      const echo = { type: 'text', text: error }
+      return client.replyMessage(event.replyToken, echo)
+    }
+  }
+  const echo = { type: 'text', text: event.message.text }
   return client.replyMessage(event.replyToken, echo)
 }
 
 const shortShopeeLink = (url, subIds) => {
   return new Promise((resolve, reject) => {
-    fetch(SHOPEE_API_URL + `/shopee/getShortLink?input=${url}&${subIds}`)
+    fetch(SHOPEE_API_URL + `/shopee?input=${url}&${subIds}`)
+      .then(res => res.json())
       .then(res => {
-        console.log('res:', res)
         resolve(res.data.generateShortLink.shortLink)
       })
       .catch(err => {
-        console.log(err)
         const code = err[0]?.extensions?.code
         if (code === 11001) {
           reject('記憶文字超過50字')
