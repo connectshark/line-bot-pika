@@ -13,7 +13,7 @@ const messageHandler = async (event) => {
   }
 
   const link = event.message.text
-  const isShopeeLink = link.match('/^https\:\/\/shopee\.tw\//')
+  const isShopeeLink = link.includes('https://shopee.tw/', 0)
 
   if (isShopeeLink) {
     let str = `id0=bot&id1=${event.timestamp}&id2=&id3=&id4=`
