@@ -11,7 +11,8 @@ const messageHandler = async (event) => {
   if (event.type !== 'message' || event.message.type !== 'text') {
     return Promise.resolve(null)
   }
-  client.pushMessage(event.source.userId, [
+
+  await client.pushMessage(event.source.userId, [
     { type: 'text', text: '(皮卡丘從寶貝球出來~' },
     { type: 'text', text: '皮卡丘收到 滋滋~' }
   ])
@@ -20,7 +21,7 @@ const messageHandler = async (event) => {
   const isShopeeLink = link.includes('https://shopee.tw/', 0)
 
   if (isShopeeLink) {
-    client.pushMessage(event.source.userId, [
+    await client.pushMessage(event.source.userId, [
       { type: 'text', text: '蝦皮網址正確 電擊處理 滋滋~' }
     ])
     let str = `id0=bot&id1=${event.timestamp}&id2=&id3=&id4=`
@@ -39,6 +40,9 @@ const messageHandler = async (event) => {
       return client.replyMessage(event.replyToken, echo)
     }
   }
+  await client.pushMessage(event.source.userId, [
+    { type: 'text', text: '剛剛說了' }
+  ])
   const echo = { type: 'text', text: event.message.text }
   return client.replyMessage(event.replyToken, echo)
 }
