@@ -10,9 +10,8 @@ const linebotController = require('../controller/lineBotController')
 router.post('/', lineBotMiddleware(config), (req, res) => {
   Promise
     .all(req.body.events.map(linebotController.messageHandler))
-    .then((result) => res.json(result))
-    .catch((err) => {
-      console.error(err)
+    .then(result => res.json(result))
+    .catch(err => {
       res.status(500).end()
     })
 })
