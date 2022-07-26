@@ -20,8 +20,8 @@ const messageHandler = async (event) => {
 const shortShopeeLink = (url, subIds) => {
   return new Promise((resolve, reject) => {
     fetch(SHOPEE_API_URL + `/shopee/getShortLink?input=${url}&${subIds}`)
-      .then(res => res.json())
       .then(res => {
+        console.log('res:', res)
         resolve(res.data.generateShortLink.shortLink)
       })
       .catch(err => {
