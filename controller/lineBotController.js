@@ -11,18 +11,31 @@ const messageHandler = async (event) => {
   if (event.type !== 'message' || event.message.type !== 'text') {
     return Promise.resolve(null)
   }
+  client.pushMessage(event.source.userId, [
+    { type: 'text', text: '(皮卡丘從寶貝球出來~' },
+    { type: 'text', text: '皮卡丘收到 滋滋~' }
+  ])
 
   const link = event.message.text
   const isShopeeLink = link.includes('https://shopee.tw/', 0)
 
   if (isShopeeLink) {
+    client.pushMessage(event.source.userId, [
+      { type: 'text', text: '蝦皮網址正確 電擊處理 滋滋~' }
+    ])
     let str = `id0=bot&id1=${event.timestamp}&id2=&id3=&id4=`
     try {
       const link = await shortShopeeLink(event.message.text, str)
-      const echo = { type: 'text', text: link }
+      const echo = [
+        { type: 'text', text: '轉換成功 (皮卡皮卡~' },
+        { type: 'text', text: link }
+      ]
       return client.replyMessage(event.replyToken, echo)
     } catch (error) {
-      const echo = { type: 'text', text: error }
+      const echo = [
+        { type: 'text', text: '好像有點問題 (皮卡皮卡~' },
+        { type: 'text', text: error }
+      ]
       return client.replyMessage(event.replyToken, echo)
     }
   }
