@@ -1,3 +1,3 @@
-# Express server
+# line-bot-pika
 
-express sample server
+line機器人 超極巨皮卡丘
