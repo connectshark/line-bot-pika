@@ -8,7 +8,6 @@ const config = {
 const client = new linebot.Client(config)
 
 router.post('/', linebot.middleware(config), (req, res) => {
-	console.log(req, res)
   Promise
     .all(req.body.events.map(handleEvent))
     .then((result) => res.json(result))
@@ -22,6 +21,7 @@ const handleEvent = event => {
   if (event.type !== 'message' || event.message.type !== 'text') {
     return Promise.resolve(null)
   }
+  console.log(event)
   const echo = { type: 'text', text: event.message.text }
   return client.replyMessage(event.replyToken, echo)
 }
