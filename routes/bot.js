@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 const linebot = require('@line/bot-sdk')
 const config = {
-  channelAccessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
-  channelSecret: 'YOUR_CHANNEL_SECRET'
+  channelAccessToken: process.env.BOT_CHANNEL_ACCESS_TOKEN,
+  channelSecret: process.env.BOT_CHANNEL_SECRET
 }
 const client = new linebot.Client(config)
 
