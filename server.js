@@ -16,6 +16,9 @@ app.use('/', express.static(path.join(__dirname, '/public')))
 
 app.use('/', require('./routes/root'))
 app.use('/bot', require('./routes/bot'))
+app.get('/healthz', (req, res) => {
+  res.status(200).send('ok')
+})
 
 app.all('*', (req, res) => {
   res.status(404);
