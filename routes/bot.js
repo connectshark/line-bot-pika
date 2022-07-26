@@ -1,15 +1,29 @@
 const express = require('express')
 const router = express.Router()
-const linebot = require('linebot')
-const bot = linebot({
-  channelId: process.env.BOT_CHANNEL_ID,
-  channelSecret: process.env.BOT_CHANNEL_SECRET,
-  channelAccessToken: process.env.BOT_CHANNEL_ACCESS_TOKEN
-})
-const linebotParser = bot.parser()
-const lineBotController = require('../controller/lineBotController')
+const linebot = require('@line/bot-sdk')
+const config = {
+  channelAccessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
+  channelSecret: 'YOUR_CHANNEL_SECRET'
+}
+const client = new linebot.Client(config)
 
-router.post('/', linebotParser)
-bot.on('message', lineBotController.messageHandler)
+router.post('/', linebot.middleware(config), (req, res) => {
+	console.log(req, res)
+  Promise
+    .all(req.body.events.map(handleEvent))
+    .then((result) => res.json(result))
+    .catch((err) => {
+      console.error(err)
+      res.status(500).end()
+    })
+})
+
+const handleEvent = event => {
+  if (event.type !== 'message' || event.message.type !== 'text') {
+    return Promise.resolve(null)
+  }
+  const echo = { type: 'text', text: event.message.text }
+  return client.replyMessage(event.replyToken, echo)
+}
 
 module.exports = router

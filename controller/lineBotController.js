@@ -1,9 +1,9 @@
 const messageHandler = event => {
-  event.reply(event.message.text).then(function (data) {
-    console.log('Success', data)
-  }).catch(function (error) {
-    console.log('Error', error)
-  })
+  if (event.type !== 'message' || event.message.type !== 'text') {
+    return Promise.resolve(null)
+  }
+  const echo = { type: 'text', text: event.message.text }
+  return client.replyMessage(event.replyToken, echo)
 }
 
 module.exports = {
