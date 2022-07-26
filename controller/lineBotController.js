@@ -25,6 +25,7 @@ const shortShopeeLink = (url, subIds) => {
         resolve(res.data.generateShortLink.shortLink)
       })
       .catch(err => {
+        console.log(err)
         const code = err[0]?.extensions?.code
         if (code === 11001) {
           reject('記憶文字超過50字')
