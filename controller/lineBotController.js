@@ -10,18 +10,34 @@ const messageObject = {
 const quick = [
   {
     type: 'text',
-    text: 'Hi! 歡迎加入超極巨皮卡丘好友, 接續蝦英雄精神產生的快速機器人, 可以直接輸入任意蝦皮網址 或是輸入"/how"來查詢如何使用說明',
+    text: '歡迎加入超極巨皮卡丘好友 $',
+    emojis: [
+      {
+        index: 13,
+        productId: '5ac1bfd5040ab15980c9b435',
+        emojiId: '085'
+      }
+    ]
   },
   {
+    type: 'text',
+    text: '接續蝦英雄精神產生的快速機器人, 可以直接輸入任意蝦皮網址',
+  },
+  {
+    type: 'text',
+    text: '或是輸入"/how"來查詢如何使用說明',
     quickReply: {
       items: [
         {
-          "type": "message",
-          "label": "如何使用?",
-          text: '/how'
+          type: 'action',
+          action: {
+            type: 'message',
+            label: '如何使用?',
+            text: '/how'
+          }
         }
       ]
-    },
+    }
   }
 ]
 const allowMessageType = ['text', 'sticker']

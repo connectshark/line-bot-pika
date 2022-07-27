@@ -8,7 +8,6 @@ router.post('/', bot.lineBotMiddleware(bot.config), (req, res) => {
     .all(req.body.events.map(linebotController.eventHandler))
     .then(result => res.json(result))
     .catch(err => {
-      console.log(err)
       res.status(500).end()
     })
 })
