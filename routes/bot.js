@@ -1,15 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const lineBotMiddleware = require('@line/bot-sdk').middleware
-const config = {
-  channelAccessToken: process.env.BOT_CHANNEL_ACCESS_TOKEN,
-  channelSecret: process.env.BOT_CHANNEL_SECRET
-}
 const linebotController = require('../controller/lineBotController')
+const bot = require('../bot/index')
 
-router.post('/', lineBotMiddleware(config), (req, res) => {
+router.post('/', bot.lineBotMiddleware(bot.config), (req, res) => {
   Promise
-    .all(req.body.events.map(linebotController.messageHandler))
+    .all(req.body.events.map(linebotController.eventHandler))
     .then(result => res.json(result))
     .catch(err => {
       res.status(500).end()

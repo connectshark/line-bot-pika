@@ -2,6 +2,14 @@
 
 line機器人 超極巨皮卡丘
 
+[官方文件](https://developers.line.biz/en/reference/messaging-api/#webhook-event-objects)
+
+[@line/bot-sdk](https://line.github.io/line-bot-sdk-nodejs/#introduction)
+
+[Line Enginnering Blog](https://engineering.linecorp.com/zh-hant/blog)
+
+[開發LINE聊天機器人不可不知的十件事](https://engineering.linecorp.com/zh-hant/blog/line-device-10/)
+
 ```
 {
   type: 'message',
