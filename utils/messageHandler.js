@@ -20,6 +20,23 @@ const textHandler = async event => {
       ]
     }
   }
+
+  if (text === '/how') {
+    echo = [
+      { type: 'text', text: '超極巨皮卡丘可以將任意蝦皮網址縮短成最適合社群使用的長度', emojis: [{ index: 0, productId: '5ac2213e040ab15980c9b447', emojiId: '007' }] },
+      { type: 'text', text: '只需要把蝦皮上長長的連結複製貼進來,或是利用Line的分享功能直接分享進來' },
+      { type: 'text', text: '超極巨皮卡丘就會從寶貝球裡出來打工' }
+    ]
+  }
+  return echo
+}
+
+const stickerHandler = async event => {
+  const stickerId = getRandom(1988, 2027)
+  const echo = [
+    { type: 'text', text: '(皮卡皮卡~' },
+    { type: 'sticker', packageId: '446', stickerId: stickerId.toString() }
+  ]
   return echo
 }
 
@@ -41,6 +58,11 @@ const shortShopeeLink = (url, subIds) => {
   })
 }
 
+const getRandom = (min,max) => {
+  return Math.floor(Math.random()*(max-min+1))+min
+}
+
 module.exports = {
-  textHandler
+  textHandler,
+  stickerHandler
 }
